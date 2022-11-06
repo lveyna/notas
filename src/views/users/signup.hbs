@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Registro de usuarios
+            </div>
+            <div class="card-body">
+                <form action="/users/signup" method="POST">
+                     <div class="m-3">
+                         <label for="txtNombre" class="form-label">
+                             Nombre
+                         </label> 
+                         <input type="text" class="form-control"
+                                name="nombre" id="txtNombre"
+                                placeholder="Introduzca su nombre"
+                                value="{{nombre}}"        
+                        >
+                     </div>
+                     <div class="m-3">
+                         <label for="txtEmail" class="form-label">
+                             Email:
+                         </label>
+                         <input type="email" class="form-control"
+                                name="email" id="txtEmail"
+                                placeholder="Introduzca el email"
+                                aria-describedby="emailHelp"
+                                value="{{email}}"
+                        >
+                                <div id="emailHelp" class="form-text">
+                                    Nunca compartiremos tu email con alguien más</div>
+                     </div>
+                     <div class="m-3">
+                         <label for="txtPassword" class="form-label">
+                             Contraseña
+                         </label>
+                         <input type="password" class="form-control"
+                                name="password" id="txtPassword"
+                                placeholder="Introduzca la contraseña"
+                                value="{{password}}"        
+                        >
+                     </div>
+                     <div class="m-3">
+                         <label for="txtConfirm" class="form-label">
+                             Confirmar Contraseña
+                         </label>
+                         <input type="password" class="form-control"
+                                name="confirmarpassword" id="txtConfirm"
+                                placeholder="Confirme la contraseña"
+                                value="{{confirmarpassword}}"
+                        >
+                     </div>
+                     <div class="m-3 d-grid gap-2">
+                          <button type="submit" class="btn btn-outline-success">
+                                  Registrar
+                          </button>
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

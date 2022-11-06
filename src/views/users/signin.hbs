@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="card mt-4 text-center">
+            <div class="card-header">
+                <h1>Iniciar sesión</h1>
+                <img src="/img/user.png" 
+                class="rounded-circle mx-auto d-block m-4 logo"
+                alt="logo"> 
+            </div>
+            <form action="/users/signin" method="POST">
+                <div class="card-body">
+                    <div class="m-3">
+                         <label for="txtEmail" class="form-label">
+                             Email:
+                         </label>
+                         <input type="email" class="form-control"
+                                name="email" id="txtEmail"
+                                placeholder="Introduzca el email"
+                                value="{{email}}"
+                                autofocus
+                        >
+                     </div>
+                     <div class="m-3">
+                         <label for="txtPassword" class="form-label">
+                             Contraseña
+                         </label>
+                         <input type="password" class="form-control"
+                                name="password" id="txtPassword"
+                                placeholder="Introduzca la contraseña"
+                                value="{{password}}"        
+                        >
+                     </div>
+                </div>
+                <div class="card-footer">
+                    <div class="m-3 d-grid gap-2">
+                        <button type="submit" class="btn btn-outline-success">
+                                Iniciar Sesión
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </div>
+</div>

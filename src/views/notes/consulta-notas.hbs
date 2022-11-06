@@ -1,0 +1,35 @@
+<div class="row">
+    {{#each notas}}
+        <div class="col-md-4">
+            <div class="card text-dark bg-light border-info mb-3">
+                <div class="card-header">
+                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                        {{titulo}}
+                        <a href="/notes/edit:{{_id}}"><i class="fas fa-edit m-2"></i></a>
+                        <a href="/notes/delete:{{_id}}"><i class="fas fa-trash m-2"></i></a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p>{{descripcion}}</p>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <div class="col-md-6">
+            <div class="card text-dark bg-light border-info mb-3">
+                <div class="card-header">
+                    <H3>Hola {{usuario.nombre}} </H3>
+                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                        No existen notas en la base de datos
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a href="/notes/add"
+                          class="btn btn-outline-primary" type="button">Agregar una nota<a/>
+                    </div>    
+                </div>
+            </div>
+        </div>        
+    {{/each}}
+</div>

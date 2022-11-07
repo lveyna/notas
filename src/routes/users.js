@@ -102,8 +102,19 @@ router.post('/users/signin', passport.authenticate('local', {
 
 //Ruta para finalizar la sesión
 router.get('/users/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
+    //req.logout();
+    //res.redirect('/');
+    req.session.destroy(function (err) {
+        if (err) {
+            return next(err);
+        }
+
+        //Destruir los datos de la sesión
+        req.session = null;
+
+        //Hacer un redirect a la página principal
+        res.redirect('/');
+    });
 });//Fin de /users/logout
 
 //Ruta para mostrar todos los usuarios de la base de datos

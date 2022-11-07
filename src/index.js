@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path'); //Para utilizar rutas de archivos
 const { engine } = require('express-handlebars');
 const methodOverride = require('method-override');
-const session = require('cookie-session'); //Sesiones del usuario
+const session = require('cookie-session'); //Sesiones del usuario 
 const flash = require('connect-flash'); //Envio de mensajes entre vistas
 const passport = require('passport'); //Manejo de sesiones de usuario
  

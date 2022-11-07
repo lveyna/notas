@@ -102,8 +102,6 @@ router.post('/users/signin', passport.authenticate('local', {
 
 //Ruta para finalizar la sesión
 router.get('/users/logout', function(req, res){
-    //req.logout();
-    //res.redirect('/');
     req.session.destroy(function (err) {
         if (err) {
             return next(err);

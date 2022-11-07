@@ -7,6 +7,9 @@ const router = express.Router();
 //Importamos el modelo de datos
 const Nota = require('../model/Notes');
 
+//Modulo para crear datos falsos de ejemplo
+const faker = require('faker');
+
 //Importamos la autenticación de usuarios
 const { isAuthenticated } = require('../helpers/auth');
 
@@ -19,6 +22,7 @@ router.get('/notes/add', isAuthenticated, function(req, res){
 router.get('/notes', isAuthenticated, async function(req, res){
     //res.send('Notas de la base de datos')
     //Select * from notas where usuario = req.user._id order by desc
+ /*   
     await Nota.find({usuario: req.user._id}).lean().sort({fecha: 'desc'}) 
           //Select * from notas order by fecha desc
                .then( (notas)=>{
@@ -29,6 +33,8 @@ router.get('/notes', isAuthenticated, async function(req, res){
                    console.log(err);
                    res.redirect('/error');
                })
+*/
+    res.redirect('/notes/1');          
 });//Fin de consultar todas las notas
 
 //Ruta para guardar la nota en la base de datos. Cuando el usuario presione guardar
@@ -166,4 +172,76 @@ router.post('/notes/search', isAuthenticated, async (req, res)=>{
                  });//exec
    }//if
 }); //Fin de post /notes/search
+
+/****************FAKE DATA Y PAGINACIÓN***********************/
+
+//Ruta para agregar notas falsas de ejemplo
+router.get('/notes/generate-fake-data', isAuthenticated, async function(req, res){
+    for(let i=0; i< 50; i++){
+        //Tomamos el modelo de notas de la base de datos
+        const newNota = new Nota();
+
+        //Llenamos el objeto con datos aleatorios
+        newNota.titulo = faker.random.word();
+        newNota.descripcion = faker.lorem.paragraph();
+
+        //Asignamos el id del usuario actual
+        newNota.usuario = req.user._id;
+
+        await newNota.save();
+        //console.log(newNota);
+    }
+    res.redirect('/notes');
+});
+
+
+//Rutas para Paginación
+
+//Ruta para pedir una página de la páginación de notas de 6 notas por pagina
+router.get('/notes/:page', isAuthenticated, async (req, res)=>{
+    //Variable que nos indica cuantas notas por página deseamos
+    let perPage= 6;
+    
+    //Variable que nos indica que número de página está solicitando el usuario
+    //Si el usuario no envia nada, se renderiza la primera página de 6 notas
+    let page = req.params.page || 1;
+
+    //Variabla que indica a partir de que nota se va a mostrar en esta página
+    //Por ejemplo en la página 1 se muestran las notas de 1 a la 6
+    //se multiplica la página 1 * 6 notas de la página y le restamos el número de items
+    //que muestra la página, en este caso 6, para que inice desde la nota 0
+
+    //Página 1 - muestra de la nota 0 a la 5 (6 notas)
+    //Página 2 - muestra de la nota 6 a la 12 (6 notas)
+
+    let numNota = (perPage * page ) - perPage; //pagina 2 numNota = (6 * 2) - 6 = 6
+
+    //Mediante la palabra reservada skip, podemos omitir de la consulta de la base de datos
+    //el número de registros indicado
+    await Nota.find({usuario: req.user._id})
+              .lean()
+              .sort({fecha: 'desc'})
+              .skip(numNota)
+              .limit(perPage)
+              .exec( (err, notas) =>{                  
+                  Nota.countDocuments ({usuario: req.user._id}, (err, total) =>{
+                      if (err)
+                          return next(err);
+                      if(total ==0) //No hay notas en la base de datos
+                          pages = null;
+                      else //Si hay notas en la base de datos
+                          pages = Math.ceil( total/perPage);
+                      res.render('notes/all-notas', {
+                          notas,
+                          current: page,
+                          pages: pages
+                      }); //render
+                  })//CountDocuments
+              });//Excec
+});//Fin de la paginación de notas
+
+
+/************************************* */
+
+
 module.exports = router;

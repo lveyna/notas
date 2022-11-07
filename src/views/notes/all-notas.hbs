@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+        {{#each notas}}
+        <div class="col-md-4">
+            <div class="card text-dark bg-light border-info mb-3">
+                <div class="card-header">
+                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                        {{titulo}}
+                        <a href="/notes/edit:{{_id}}"><i class="fas fa-edit m-2"></i></a>
+                        <a href="/notes/delete:{{_id}}"><i class="fas fa-trash m-2"></i></a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p>{{descripcion}}</p>
+                </div>
+            </div>
+        </div>
+        {{else}}
+            <div class="card mx-auto">
+                 <div class="card text-dark bg-light border-info mb-3">
+                    <div class="card-header">
+                        <H2>Hola {{usuario.nombre}}</H2>
+                        <p class="lead">No hay notas en la base de datos</p>
+                    </div>
+                </div> 
+                <div class="card-body d-grid gap-2 d-md-block">
+                    <a href="/notes/add" class="btn btn-warning">Crear nueva nota!</a>
+                </div>
+            </div>
+        {{/each}}   
+    </div>
+    <div class="row">
+        {{#if pages}}
+            <nav class="mx-auto">
+                <ul class="pagination justify-content-center">
+                    <!--Primera Página-->
+                    {{#equal current 1}}
+                        <!--Deshabilitar el primer boton de navegación -->
+                        <li class="page-item disabled mr-1">
+                            <a href="#" class="page-link">Primera</a>
+                        </li>
+                    {{else}}
+                        <li class="page-item mr-1">
+                            <a href="/notes/1" class="page-link">Primera</a>
+                        </li>
+                    {{/equal}}
+
+                    <!-- Páginas internas-->
+                    {{#for current pages}}
+                         {{{this}}}
+                    {{/for}}
+
+
+                    <!--Ultima Página-->
+                    {{#equal current pages}}
+                        <!--Deshabilitar el primer boton de navegación -->
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Ultima</a>
+                        </li>
+                    {{else}}
+                        <li class="page-item">
+                            <a href="/notes/{{pages}}" class="page-link">Ultima</a>
+                        </li>
+                    {{/equal}}
+
+                </ul>
+            </nav>
+        {{/if}}
+    </div>
+</div>

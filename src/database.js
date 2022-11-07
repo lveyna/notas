@@ -2,8 +2,7 @@
 
 const mongoose = require('mongoose');
 require('dotenv').config();
-
-const url = process.env.MONGODB_URL
+const url = process.env.MONGODB_URL || "mongodb://localhost/notasdb"
 mongoose.connect(url)
         .then( ()=>{
             console.log("Conectado a la base de datos")
